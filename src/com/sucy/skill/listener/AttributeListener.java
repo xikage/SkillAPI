@@ -13,6 +13,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -63,6 +65,15 @@ public class AttributeListener implements Listener
     {
         updatePlayer(SkillAPI.getPlayerData(event.getPlayer()));
     }
+    
+    /**
+     * Gives players bonus stats on respawn
+     */
+    @EventHandler(priority = EventPriority.HIGH)
+    public void onRespawn(PlayerRespawnEvent event)
+    {
+        updatePlayer(SkillAPI.getPlayerData(event.getPlayer()));
+    }
 
     /**
      * Clears stored bonuses for a player when they quit
@@ -94,7 +105,12 @@ public class AttributeListener implements Listener
     @EventHandler
     public void onInvest(PlayerUpAttributeEvent event)
     {
-        updatePlayer(event.getPlayerData());
+        final PlayerData p = event.getPlayerData();
+        new BukkitRunnable()    {
+            public void run()   {
+                updatePlayer(p);
+            }
+        }.runTaskLater(SkillAPI.singleton, 1);
     }
 
     /**

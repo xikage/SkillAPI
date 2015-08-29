@@ -276,13 +276,21 @@ public class MainListener implements Listener
      * @param event event details
      */
     @EventHandler
-    public void onRespawn(PlayerRespawnEvent event)
-    {
-        PlayerData data = SkillAPI.getPlayerData(event.getPlayer());
+    public void onRespawn(PlayerRespawnEvent event) {
+        final PlayerData data = SkillAPI.getPlayerData(event.getPlayer());
         if (data.hasClass() && SkillAPI.getSettings().isWorldEnabled(event.getPlayer().getWorld()))
         {
             data.startPassives(event.getPlayer());
         }
+        plugin.getServer().getScheduler().runTaskLater(plugin, new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                data.updateScoreboard();
+            }
+        }, 2);
+        
     }
 
     /**

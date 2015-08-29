@@ -51,7 +51,7 @@ public class SQLIO extends IOManager
             table = database.createTable(api, "players");
 
             table.createColumn(ID, ColumnType.INCREMENT);
-            table.createColumn(DATA, ColumnType.TEXT);
+            table.createColumn(DATA, ColumnType.STRING_1000);
         }
     }
 

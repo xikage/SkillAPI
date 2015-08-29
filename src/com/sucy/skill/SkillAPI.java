@@ -64,7 +64,7 @@ import java.util.List;
  */
 public class SkillAPI extends JavaPlugin
 {
-    private static SkillAPI singleton;
+    public static SkillAPI singleton;
 
     public final HashMap<String, Skill>          skills  = new HashMap<String, Skill>();
     public final HashMap<String, RPGClass>       classes = new HashMap<String, RPGClass>();
